@@ -1,28 +1,51 @@
 <#import "lib/java.ftl" as java>
----
-title: ${subject.name()}
-linktitle: ${subject.name()}
-<#if subject.firstSentenceTags()?has_content>description: <@compress  single_line=true><@java.tags subject.firstSentenceTags() /></@compress></#if>
-
 
 ---
-### ${subject.name()}
+### [${name}](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L${lineNumber})
+${java.annotations_for(subject)} ${java.link(subject.returnType())} ${subject.name()}(<@java.parameterList subject.parameters() />)
 
-${java.annotations_for(subject)} ${java.link(subject.returnType())} ${subject.name()}(<@java.parameterList subject.parameters() />) <@java.exceptionList subject.thrownExceptionTypes() />
+${ util.processDescription(subject.commentText())}
 
-<@java.tags subject.inlineTags() />
+<Tabs> 
+<#list examples as example>
 
+<Tab language="${ example.getGenerator() }">
 
-<#if subject.typeParameters()?has_content>
-<@java.typeParameterWithTags util subject.typeParameters()/>
+<Section type="request">
+${ example.getExample() }
+</Section>
+
+<Section type="response">
+${ example.getResponseOk() }
+</Section>
+
+<Section type="error">
+<#if example.hasResponseError()>
+${ example.getResponseError() }
+<#else>
+No response examples available
 </#if>
+</Section>
+</#list>
+</Tabs<
+
+
 
 <#if subject.paramTags()?has_content>
+***
+	
 <@java.parameterTags subject.paramTags() />
 </#if>
 
-  <#if subject.throwsTags()?has_content>
-#### Exceptions
 
-TODO: ThrowsTag[]throwsTags();
-  </#if>
+<#if subject.tags("return")?has_content>
+***
+
+<#if returnclass??>
+Returns ${java.link(returnclass)}
+</#if>
+
+<@java.returnTags util.parseReturnTag(subject.tags("return"), returnclass) />
+</#if>
+
+***
