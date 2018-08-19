@@ -1,9 +1,10 @@
 package com.iota.mdxdoclet;
 
-import com.sun.javadoc.AnnotationTypeDoc;
+import com.iota.mdxdoclet.data.Example;
+import com.iota.mdxdoclet.example.Export;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
-import com.sun.javadoc.ProgramElementDoc;
+import com.sun.javadoc.Tag;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -12,75 +13,100 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * The main parser class. It scans the given Doclet document root and creates the MDX files.
+ * The main parser class. It scans the given Doclet document root and creates
+ * the MDX files.
  *
  * The work is done in Freemarker templates.
  *
  * Based on work from https://github.com/neuhalje/markdown-doclet
- * @author Jens Neuhalfen
  */
 public class Parser {
 
-  private final Configuration configuration;
+	private final Configuration configuration;
+	private final Util util;
 
-  Parser(Configuration configuration) {
-    this.configuration = configuration;
-  }
-  
-  public void renderMethod(OutputStream out, MethodDoc methodDoc) throws IOException, TemplateException {
-	  Writer w = new OutputStreamWriter(out);
-	  render(w, methodDoc, "method.ftl");
-  }
+	private List<Export> exports;
 
-  public void renderClass(OutputStream out, ClassDoc classDoc) throws IOException, TemplateException {
-	  Writer w = new OutputStreamWriter(out);
+	Parser(Configuration configuration, Util util) {
+		this.configuration = configuration;
+		this.util = util;
+		this.exports = new ArrayList<>();
+	}
 
-	  if (classDoc instanceof AnnotationTypeDoc) {
-		  renderAnnotationTypeDoc(w, (AnnotationTypeDoc) classDoc);
-	  } else if (classDoc.isEnum()) {
-		  renderEnum(w, classDoc);
-	  } else if (classDoc.isInterface()) {
-		  renderInterface(w, classDoc);
-	  } else {
-		  renderClass(w, classDoc);
-	  }
-  }
+	public void renderMethod(OutputStream out, MethodDoc methodDoc, ApiCall api) throws IOException, TemplateException {
+		Writer w = new OutputStreamWriter(out);
+		render(w, methodDoc, "method.ftl", api);
+	}
 
+	private void render(Writer w, MethodDoc doc, String templateName, ApiCall api)
+			throws IOException, TemplateException {
+		Template template = configuration.getTemplate(templateName);
+		Map<String, Object> input = new HashMap<String, Object>();
 
-  /**
-   * Parse an annotation.
-   *
-   * @param annotationTypeDoc A AnnotationTypeDoc instance
-   * @return the annotation node
-   */
-  private void renderAnnotationTypeDoc(Writer w, AnnotationTypeDoc annotationTypeDoc) throws IOException, TemplateException {
-	  final String templateName = "class.ftl";
-	  render(w, annotationTypeDoc, templateName);
-  }
+		// Check for return class
+		Tag[] returnTags = doc.tags("return");
+		ClassDoc c = util.getReturnClass(returnTags);
+		if (c != null) {
+			input.put("returnclass", c);
+		}
+		
+		//Only generate methods once, if c == null, returns empty list
+		List<MethodDoc> methods = publicGetMethods(c);
 
+		// Make the examples
+		List<Example> examples = new java.util.ArrayList<>();
+		for (Export x : exports) {
+			//Response based on return class or default + return var, or default in case of void
+			String response;
+			if (c != null) {
+				response = x.generateResponse(doc, api, methods);
+			} else {
+				response = x.generateResponse(doc, api);
+			}
+			
+			examples.add(new Example(
+				x.generateExample(doc, api), 
+				response,
+				x.generateError(), 
+				x.getName())
+			);
+		}
 
-  private void renderEnum(Writer w, ClassDoc classDoc) throws IOException, TemplateException {
-	  render(w, classDoc, "class.ftl");
-  }
+		input.put("examples", examples.toArray(new Example[] {}));
+		input.put("lineNumber", doc.position().line() + "");
+		input.put("subject", doc);
+		input.put("util", util);
+		input.put("name", api.toString());
+		template.process(input, w);
+	}
+	
+	public ArrayList<MethodDoc> publicGetMethods(ClassDoc doc) {
+		return publicGetMethods(doc, new ArrayList<MethodDoc>());
+	}
 
+	private ArrayList<MethodDoc> publicGetMethods(ClassDoc c, ArrayList<MethodDoc> docs) {
+		if (c == null)
+			return docs;
+		
+		if (c.superclass() != null) {
+			publicGetMethods(c.superclass(), docs);
+		}
 
-  private void renderInterface(Writer w, ClassDoc classDoc) throws IOException, TemplateException {
-	  render(w, classDoc, "class.ftl");
-  }
+		for (MethodDoc m : c.methods()) {
+			if (m.isPublic() && m.inlineTags().length > 0 && m.name().startsWith("get")) {
+				docs.add(m);
+			}
+		}
+		return docs;
+	}
 
-  private void renderClass(Writer w, ClassDoc classDoc) throws IOException, TemplateException {
-	  render(w, classDoc, "class.ftl");
-  }
-
-  private void render(Writer w, ProgramElementDoc doc, String templateName) throws IOException, TemplateException {
-	  Template template = configuration.getTemplate(templateName);
-	  Map<String, Object> input = new HashMap<String, Object>();
-	  input.put("subject", doc);
-	  input.put("util", new Util());
-	  template.process(input, w);
-  }
+	public void addExport(Export export) {
+		exports.add(export);
+	}
 }
