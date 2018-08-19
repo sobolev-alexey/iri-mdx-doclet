@@ -3,11 +3,18 @@ package com.iota.mdxdoclet;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Locale;
 
-import com.sun.javadoc.*;
+import com.iota.mdxdoclet.example.CURL;
+import com.iota.mdxdoclet.example.NodeJS;
+import com.iota.mdxdoclet.example.Python;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.DocErrorReporter;
+import com.sun.javadoc.Doclet;
+import com.sun.javadoc.LanguageVersion;
+import com.sun.javadoc.MethodDoc;
+import com.sun.javadoc.RootDoc;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
@@ -17,15 +24,13 @@ import freemarker.template.Version;
 public class MDXDoclet extends Doclet  {
 	
 	private static final String API_NAME = "API";
-	private static String version;
+	private static String version = "Unknown";
 	
-	private ClassDoc apiDoc;
-	private Parser generator;
+	private Parser parser;
 	
-	public MDXDoclet(ClassDoc c) {
-		apiDoc = c;
+	public MDXDoclet(RootDoc root) {
 		
-		Configuration configuration = new Configuration(new Version(2, 3, 25));
+		Configuration configuration = new Configuration(new Version(2, 3, 26));
 	    // Where do we load the templates from:
 	    configuration.setClassForTemplateLoading(Parser.class, "/templates");
 
@@ -36,32 +41,38 @@ public class MDXDoclet extends Doclet  {
 	    configuration.setBooleanFormat("yes,no");
 	    configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
-		generator = new Parser(configuration);
-		
+	    parser = new Parser(configuration, new Util(root));
+	    parser.addExport(new Python());
+	    parser.addExport(new NodeJS());
+	    parser.addExport(new CURL());
 	}
 
-    private void generate() {
+    private void generate(ClassDoc apiDoc) {
     	try {
 	        for (MethodDoc m : apiDoc.methods(false)) {
-	        	if (ApiCalls.isApiCall(m.name())) {
+	        	System.out.println(m.name());
+	        	ApiCall call = ApiCall.getApiCall(m.name());
+	        	if (call != null) {
 	        		System.out.println("Generating " + m.name());
-		        	File classFile = new File(m.name() + ".mdx");
+		        	File classFile = new File(call.toString() + ".mdx");
 		    		try  (
 	    				FileOutputStream fileOutputStream = new FileOutputStream(classFile);
 		    	        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)
 		        		 ){
 		    			
-		    			generator.renderMethod(bufferedOutputStream, m);
+		    			parser.renderMethod(bufferedOutputStream, m, call);
 	
 		    		} catch (TemplateException | IOException e) {
-		    			System.out.println("Processing method failed!!");
+		    			System.err.println("Processing method " + m.name() + " failed");
 		    			e.printStackTrace();
-	    	      	}
+	    	      	} finally {
+						
+					}
 	        	}
 	        }
     	} catch (Exception e) {
-			System.out.println("Ohoh!");
-			e.printStackTrace();
+    		System.err.println("Generating API documentation failed");
+    		e.printStackTrace();
 		}
 	}
     
@@ -69,6 +80,21 @@ public class MDXDoclet extends Doclet  {
      * STATIC METHODS - USED BY DOCLET
      * 
      */
+    
+    public static boolean start(RootDoc root) {
+		System.out.println("Generating MDX docs for IRI V" + version);
+		MDXDoclet doclet = new MDXDoclet(root);
+		
+		for (ClassDoc c : root.classes()) {
+        	if (c.name().equals(API_NAME)) {
+        		doclet.generate(c);
+        		break;
+        	}
+        }
+        
+        System.out.println("Documentation generated");
+        return true;
+    }
 
     /**
 	 * Doclet class method that returns how many arguments would be consumed if
@@ -100,23 +126,11 @@ public class MDXDoclet extends Doclet  {
 		return Doclet.validOptions(args, err);
 	}
 	
-	public static boolean start(RootDoc root) {
-		System.out.println("Making MDX docs for IRI V" + version);
-        for (ClassDoc c : root.classes()) {
-        	if (c.name().equals(API_NAME)) {
-        		MDXDoclet doclet = new MDXDoclet(c);
-        		doclet.generate();
-        		break;
-        	}
-        }
-        
-        System.out.println("Docs generated!");
-        return true;
-    }
-    
-	private static void print(String name, String comment) throws IOException {
-        if (comment != null && comment.length() > 0) {
-            new FileWriter(name + ".txt").append(comment).close();
-        }
+	/**
+	 * Without this method present and returning LanguageVersion.JAVA_1_5,
+     * Javadoc will not process generics because it assumes LanguageVersion.JAVA_1_1
+	 */
+	public static LanguageVersion languageVersion() {
+		return LanguageVersion.JAVA_1_5;
     }
 }
