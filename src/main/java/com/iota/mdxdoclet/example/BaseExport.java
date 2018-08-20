@@ -12,11 +12,6 @@ public abstract class BaseExport implements Export {
 
 	protected static final String CMD = "%cmd";
 
-	/**
-	 * Generates the post example
-	 * 
-	 * We could split out the 
-	 */
 	@Override
 	public String generateExample(MethodDoc command, ApiCall api) {
 		
@@ -26,7 +21,7 @@ public abstract class BaseExport implements Export {
 		for (Parameter p : command.parameters()){
 			String name = p.name();
 			
-			generatedCommand.append(", \"" + name + "\": ");
+			generatedCommand.append(", ");
 			generatedCommand.append(generateExampleForCallAndType(api, name, p.type()));
 		}
 		generatedCommand.append("}");
@@ -73,6 +68,26 @@ public abstract class BaseExport implements Export {
 		return "{\"error\": \"'command' parameter has not been specified\"}";
 	}
 	
+	private String generateExampleForCallAndType(ApiCall api, String argname, Type t) {
+		String type = t.typeName();
+		if (t.asParameterizedType() != null) {
+			type = t.asParameterizedType().typeArguments()[0].typeName();
+		}
+		
+		StringBuilder generatedCommand = new StringBuilder("");
+		generatedCommand.append("\"" + argname + "\": ");
+		if (t.dimension().equals("[]") || t.asParameterizedType() != null) { //parameterized is a list of sorts, or T
+			generatedCommand.append("[");
+			generatedCommand.append("\"" + getExampleData(api.toString(), argname, type) + "\"");
+			generatedCommand.append(", ");
+			generatedCommand.append("\"" + getExampleData(api.toString(), argname, type) + "\"");
+			generatedCommand.append("]");
+		} else {
+			generatedCommand.append("\"" + getExampleData(api.toString(), argname, type) + "\"");
+		}
+		return generatedCommand.toString();
+	}
+	
 	private String getExampleData(String command, String name, String returnType) {
 		//Blergh
 		if (name.equals("minWeightMagnitude")) {
@@ -104,26 +119,6 @@ public abstract class BaseExport implements Export {
 		}
 		
 		return "missing_data";
-	}
-	
-	private String generateExampleForCallAndType(ApiCall api, String argname, Type t) {
-		String type = t.typeName();
-		if (t.asParameterizedType() != null) {
-			type = t.asParameterizedType().typeArguments()[0].typeName();
-		}
-		
-		StringBuilder generatedCommand = new StringBuilder("");
-		generatedCommand.append("\"" + argname + "\": ");
-		if (t.dimension().equals("[]")) {
-			generatedCommand.append("[");
-			generatedCommand.append("\"" + getExampleData(api.toString(), argname, type) + "\"");
-			generatedCommand.append(", ");
-			generatedCommand.append("\"" + getExampleData(api.toString(), argname, type) + "\"");
-			generatedCommand.append("]");
-		} else {
-			generatedCommand.append("\"" + getExampleData(api.toString(), argname, type) + "\"");
-		}
-		return generatedCommand.toString();
 	}
 
 	protected abstract String getPost();
