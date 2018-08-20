@@ -1,6 +1,6 @@
 
 ---
-### [getTips](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L671)
+### [getTips](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L669)
  [AbstractResponse](/javadoc/com/iota/iri/service/dto/abstractresponse/) getTipsStatement()
 
 Returns the list of tips.
@@ -31,7 +31,7 @@ print jsonData
 </Section>
 
 <Section type="response">
-{"duration": "616", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
+{"duration": "17", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 </Section>
 
 <Section type="error">
@@ -64,7 +64,7 @@ request(options, function (error, response, data) {
 </Section>
 
 <Section type="response">
-{"duration": "64", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
+{"duration": "969", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 </Section>
 
 <Section type="error">
@@ -82,7 +82,7 @@ curl http://localhost:14265
 </Section>
 
 <Section type="response">
-{"duration": "86", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
+{"duration": "828", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 </Section>
 
 <Section type="error">
@@ -100,6 +100,6 @@ Returns [GetTipsResponse](/javadoc/com/iota/iri/service/dto/gettipsresponse/)
 
 |Return | Description |
 |--|--|
-| duration | The duration it took to process this command |
+| duration | The duration it took to process this command in milliseconds |
 | hashes | The list of current tips |
 ***

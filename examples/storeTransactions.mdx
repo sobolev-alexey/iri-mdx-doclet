@@ -1,7 +1,7 @@
 
 ---
-### [storeTransactions](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L681)
- void storeTransactionsStatement(java.util.List trys)
+### [storeTransactions](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L679)
+ void storeTransactionsStatement(java.util.List trytes)
 
 Store transactions into the local storage. 
  The trytes to be used for this call are returned by `attachToTangle`.
@@ -14,7 +14,7 @@ Store transactions into the local storage.
 import urllib2
 import json
 
-command = {"command": "storeTransactions", "trys": "trys": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"}
+command = {"command": "storeTransactions", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 
 stringified = json.dumps(command)
 
@@ -32,7 +32,7 @@ print jsonData
 </Section>
 
 <Section type="response">
-{"duration": 238}
+{"duration": 36}
 </Section>
 
 <Section type="error">
@@ -44,7 +44,7 @@ print jsonData
 <Section type="request">
 var request = require('request');
 
-var command = {"command": "storeTransactions", "trys": "trys": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"}
+var command = {"command": "storeTransactions", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 
 var options = {
   url: 'http://localhost:14265',
@@ -65,7 +65,7 @@ request(options, function (error, response, data) {
 </Section>
 
 <Section type="response">
-{"duration": 417}
+{"duration": 469}
 </Section>
 
 <Section type="error">
@@ -79,11 +79,11 @@ curl http://localhost:14265
 -X POST 
 -H 'Content-Type: application/json' 
 -H 'X-IOTA-API-Version: 1' 
--d '{"command": "storeTransactions", "trys": "trys": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"}'
+-d '{"command": "storeTransactions", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}'
 </Section>
 
 <Section type="response">
-{"duration": 564}
+{"duration": 922}
 </Section>
 
 <Section type="error">
@@ -97,7 +97,7 @@ curl http://localhost:14265
 	
 |Parameters | Description |
 |--|--|
-| trys | List of raw data of transactions to be rebroadcast. |
+| trytes | List of raw data of transactions to be rebroadcast. |
 
 
 ***

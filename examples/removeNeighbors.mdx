@@ -1,6 +1,6 @@
 
 ---
-### [removeNeighbors](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L575)
+### [removeNeighbors](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L574)
  [AbstractResponse](/javadoc/com/iota/iri/service/dto/abstractresponse/) removeNeighborsStatement(java.util.List uris)
 
 Removes a list of neighbors to your node. 
@@ -19,7 +19,7 @@ Removes a list of neighbors to your node.
 import urllib2
 import json
 
-command = {"command": "removeNeighbors", "uris": "uris": "udp://8.8.8.8:14265"}
+command = {"command": "removeNeighbors", "uris": ["udp://8.8.8.8:14265", "udp://8.8.8.8:14265"]}
 
 stringified = json.dumps(command)
 
@@ -37,7 +37,7 @@ print jsonData
 </Section>
 
 <Section type="response">
-{"duration": "24", "removedNeighbors": "508"}
+{"duration": "751", "removedNeighbors": "38"}
 </Section>
 
 <Section type="error">
@@ -49,7 +49,7 @@ print jsonData
 <Section type="request">
 var request = require('request');
 
-var command = {"command": "removeNeighbors", "uris": "uris": "udp://8.8.8.8:14265"}
+var command = {"command": "removeNeighbors", "uris": ["udp://8.8.8.8:14265", "udp://8.8.8.8:14265"]}
 
 var options = {
   url: 'http://localhost:14265',
@@ -70,7 +70,7 @@ request(options, function (error, response, data) {
 </Section>
 
 <Section type="response">
-{"duration": "238", "removedNeighbors": "517"}
+{"duration": "48", "removedNeighbors": "937"}
 </Section>
 
 <Section type="error">
@@ -84,11 +84,11 @@ curl http://localhost:14265
 -X POST 
 -H 'Content-Type: application/json' 
 -H 'X-IOTA-API-Version: 1' 
--d '{"command": "removeNeighbors", "uris": "uris": "udp://8.8.8.8:14265"}'
+-d '{"command": "removeNeighbors", "uris": ["udp://8.8.8.8:14265", "udp://8.8.8.8:14265"]}'
 </Section>
 
 <Section type="response">
-{"duration": "44", "removedNeighbors": "203"}
+{"duration": "573", "removedNeighbors": "13"}
 </Section>
 
 <Section type="error">
@@ -110,6 +110,6 @@ Returns [RemoveNeighborsResponse](/javadoc/com/iota/iri/service/dto/removeneighb
 
 |Return | Description |
 |--|--|
-| duration | The duration it took to process this command |
+| duration | The duration it took to process this command in milliseconds |
 | removedNeighbors | The number of removed neighbors. |
 ***

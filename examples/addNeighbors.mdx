@@ -1,6 +1,6 @@
 
 ---
-### [addNeighbors](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L1150)
+### [addNeighbors](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L1148)
  [AbstractResponse](/javadoc/com/iota/iri/service/dto/abstractresponse/) addNeighborsStatement(java.util.List uris)
 
 Add a list of neighbors to your node. 
@@ -17,7 +17,7 @@ Add a list of neighbors to your node.
 import urllib2
 import json
 
-command = {"command": "addNeighbors", "uris": "uris": "udp://8.8.8.8:14265"}
+command = {"command": "addNeighbors", "uris": ["udp://8.8.8.8:14265", "udp://8.8.8.8:14265"]}
 
 stringified = json.dumps(command)
 
@@ -35,7 +35,7 @@ print jsonData
 </Section>
 
 <Section type="response">
-{"duration": "558", "addedNeighbors": "689"}
+{"duration": "125", "addedNeighbors": "802"}
 </Section>
 
 <Section type="error">
@@ -47,7 +47,7 @@ print jsonData
 <Section type="request">
 var request = require('request');
 
-var command = {"command": "addNeighbors", "uris": "uris": "udp://8.8.8.8:14265"}
+var command = {"command": "addNeighbors", "uris": ["udp://8.8.8.8:14265", "udp://8.8.8.8:14265"]}
 
 var options = {
   url: 'http://localhost:14265',
@@ -68,7 +68,7 @@ request(options, function (error, response, data) {
 </Section>
 
 <Section type="response">
-{"duration": "840", "addedNeighbors": "821"}
+{"duration": "322", "addedNeighbors": "139"}
 </Section>
 
 <Section type="error">
@@ -82,11 +82,11 @@ curl http://localhost:14265
 -X POST 
 -H 'Content-Type: application/json' 
 -H 'X-IOTA-API-Version: 1' 
--d '{"command": "addNeighbors", "uris": "uris": "udp://8.8.8.8:14265"}'
+-d '{"command": "addNeighbors", "uris": ["udp://8.8.8.8:14265", "udp://8.8.8.8:14265"]}'
 </Section>
 
 <Section type="response">
-{"duration": "997", "addedNeighbors": "986"}
+{"duration": "2", "addedNeighbors": "551"}
 </Section>
 
 <Section type="error">
@@ -108,6 +108,6 @@ Returns [AddedNeighborsResponse](/javadoc/com/iota/iri/service/dto/addedneighbor
 
 |Return | Description |
 |--|--|
-| duration | The duration it took to process this command |
+| duration | The duration it took to process this command in milliseconds |
 | addedNeighbors | Gets the number of added neighbors. |
 ***

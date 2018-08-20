@@ -50,7 +50,6 @@ public class MDXDoclet extends Doclet  {
     private void generate(ClassDoc apiDoc) {
     	try {
 	        for (MethodDoc m : apiDoc.methods(false)) {
-	        	System.out.println(m.name());
 	        	ApiCall call = ApiCall.getApiCall(m.name());
 	        	if (call != null) {
 	        		System.out.println("Generating " + m.name());

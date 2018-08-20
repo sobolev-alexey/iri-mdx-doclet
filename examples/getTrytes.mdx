@@ -1,6 +1,6 @@
 
 ---
-### [getTrytes](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L598)
+### [getTrytes](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L597)
  [AbstractResponse](/javadoc/com/iota/iri/service/dto/abstractresponse/) getTrytesStatement(java.util.List hashes)
 
 Returns the raw transaction data (trytes) of a specific transaction. 
@@ -15,7 +15,7 @@ Returns the raw transaction data (trytes) of a specific transaction.
 import urllib2
 import json
 
-command = {"command": "getTrytes", "hashes": "hashes": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"}
+command = {"command": "getTrytes", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 
 stringified = json.dumps(command)
 
@@ -33,7 +33,7 @@ print jsonData
 </Section>
 
 <Section type="response">
-{"duration": "405", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
+{"duration": "940", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 </Section>
 
 <Section type="error">
@@ -45,7 +45,7 @@ print jsonData
 <Section type="request">
 var request = require('request');
 
-var command = {"command": "getTrytes", "hashes": "hashes": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"}
+var command = {"command": "getTrytes", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 
 var options = {
   url: 'http://localhost:14265',
@@ -66,7 +66,7 @@ request(options, function (error, response, data) {
 </Section>
 
 <Section type="response">
-{"duration": "389", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
+{"duration": "280", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 </Section>
 
 <Section type="error">
@@ -80,11 +80,11 @@ curl http://localhost:14265
 -X POST 
 -H 'Content-Type: application/json' 
 -H 'X-IOTA-API-Version: 1' 
--d '{"command": "getTrytes", "hashes": "hashes": "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"}'
+-d '{"command": "getTrytes", "hashes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}'
 </Section>
 
 <Section type="response">
-{"duration": "95", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
+{"duration": "848", "trytes": ["P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999", "P9KFSJVGSPLXAEBJSHWFZLGP9GGJTIO9YITDEHATDTGAFLPLBZ9FOFWWTKMAZXZHFGQHUOXLXUALY9999"]}
 </Section>
 
 <Section type="error">
@@ -106,6 +106,6 @@ Returns [GetTrytesResponse](/javadoc/com/iota/iri/service/dto/gettrytesresponse/
 
 |Return | Description |
 |--|--|
-| duration | The duration it took to process this command |
+| duration | The duration it took to process this command in milliseconds |
 | trytes | The raw transaction data (trytes) of the specified transactions |
 ***

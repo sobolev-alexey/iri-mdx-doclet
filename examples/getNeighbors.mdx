@@ -1,6 +1,6 @@
 
 ---
-### [getNeighbors](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L708)
+### [getNeighbors](https://github.com/iotaledger/iri/blob/dev/src/main/java/com/iota/iri/service/API.java#L706)
  [AbstractResponse](/javadoc/com/iota/iri/service/dto/abstractresponse/) getNeighborsStatement()
 
 Returns the set of neighbors you are connected with, as well as their activity count. 
@@ -32,16 +32,16 @@ print jsonData
 </Section>
 
 <Section type="response">
-{"duration": "225", "neighbors": ["{ 
+{"duration": "721", "neighbors": ["{ 
 "address": "/8.8.8.8:14265", 
-"numberOfAllTransactions": 816, 
-"numberOfInvalidTransactions": 667, 
-"numberOfNewTransactions": 650 
+"numberOfAllTransactions": 372, 
+"numberOfInvalidTransactions": 519, 
+"numberOfNewTransactions": 391 
 }", "{ 
 "address": "/8.8.8.8:14265", 
-"numberOfAllTransactions": 256, 
-"numberOfInvalidTransactions": 251, 
-"numberOfNewTransactions": 193 
+"numberOfAllTransactions": 350, 
+"numberOfInvalidTransactions": 262, 
+"numberOfNewTransactions": 994 
 }"]}
 </Section>
 
@@ -75,16 +75,16 @@ request(options, function (error, response, data) {
 </Section>
 
 <Section type="response">
-{"duration": "67", "neighbors": ["{ 
+{"duration": "491", "neighbors": ["{ 
 "address": "/8.8.8.8:14265", 
-"numberOfAllTransactions": 214, 
-"numberOfInvalidTransactions": 696, 
-"numberOfNewTransactions": 885 
+"numberOfAllTransactions": 675, 
+"numberOfInvalidTransactions": 443, 
+"numberOfNewTransactions": 887 
 }", "{ 
 "address": "/8.8.8.8:14265", 
-"numberOfAllTransactions": 391, 
-"numberOfInvalidTransactions": 548, 
-"numberOfNewTransactions": 526 
+"numberOfAllTransactions": 894, 
+"numberOfInvalidTransactions": 825, 
+"numberOfNewTransactions": 793 
 }"]}
 </Section>
 
@@ -103,16 +103,16 @@ curl http://localhost:14265
 </Section>
 
 <Section type="response">
-{"duration": "366", "neighbors": ["{ 
+{"duration": "735", "neighbors": ["{ 
 "address": "/8.8.8.8:14265", 
-"numberOfAllTransactions": 661, 
-"numberOfInvalidTransactions": 52, 
-"numberOfNewTransactions": 3 
+"numberOfAllTransactions": 178, 
+"numberOfInvalidTransactions": 295, 
+"numberOfNewTransactions": 589 
 }", "{ 
 "address": "/8.8.8.8:14265", 
-"numberOfAllTransactions": 33, 
-"numberOfInvalidTransactions": 705, 
-"numberOfNewTransactions": 691 
+"numberOfAllTransactions": 989, 
+"numberOfInvalidTransactions": 485, 
+"numberOfNewTransactions": 297 
 }"]}
 </Section>
 
@@ -131,6 +131,6 @@ Returns [GetNeighborsResponse](/javadoc/com/iota/iri/service/dto/getneighborsres
 
 |Return | Description |
 |--|--|
-| duration | The duration it took to process this command |
+| duration | The duration it took to process this command in milliseconds |
 | neighbors | The list of neighbors, including the following stats: address, connectionType, numberOfAllTransactions, numberOfRandomTransactionRequests, numberOfNewTransactions, numberOfInvalidTransactions, numberOfSentTransactions |
 ***
