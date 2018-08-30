@@ -12,12 +12,14 @@ ${ util.processDescription(subject.commentText())}
 <Tab language="${ example.getGenerator() }">
 
 <Section type="request">
+
 ```${ example.getLanguage() }
 ${ example.getExample() }
 ```
 </Section>
 
 <Section type="response">
+
 ```json
 ${ example.getResponseOk() }
 ```
@@ -25,6 +27,7 @@ ${ example.getResponseOk() }
 
 <Section type="error">
 <#if example.hasResponseError()>
+
 ```json
 ${ example.getResponseError() }
 ```
