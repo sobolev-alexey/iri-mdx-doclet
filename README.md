@@ -7,6 +7,9 @@ Clone project, then run with maven:
 
 Add plugin to the project (For now this looks for the IRI services/API class since thats the functions we publish)
 ```
+
+By default, this outputs into ```target/site/```
+
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-javadoc-plugin</artifactId>
