@@ -53,7 +53,7 @@ public class MDXDoclet extends Doclet  {
 	        	ApiCall call = ApiCall.getApiCall(m.name());
 	        	if (call != null) {
 	        		System.out.println("Generating " + m.name());
-		        	File classFile = new File(call.toString() + ".mdx");
+		        	File classFile = new File(call.toString() + ".md");
 		    		try  (
 	    				FileOutputStream fileOutputStream = new FileOutputStream(classFile);
 		    	        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)
