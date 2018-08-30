@@ -6,15 +6,13 @@ public class Example {
 	private String responseOk;
 	private String responseError;
 	private String generator;
+	private String language;
 	
-	public Example(String example, String responseOk, String generator) {
-		this(example, responseOk, generator, null);
-	}
-	
-	public Example(String example, String responseOk, String responseError, String generator) {
+	public Example(String example, String responseOk, String responseError, String generator, String language) {
 		this.example = example;
 		this.responseOk = responseOk;
 		this.generator = generator;
+		this.language = language;
 		this.responseError = responseError;
 	}
 
@@ -38,5 +36,7 @@ public class Example {
 		return responseError;
 	}
 	
-	
+	public String getLanguage() {
+        return language;
+    }
 }

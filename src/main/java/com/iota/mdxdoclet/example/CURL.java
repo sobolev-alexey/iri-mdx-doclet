@@ -16,4 +16,8 @@ public class CURL extends BaseExport {
 		return "cURL";
 	}
 
+    @Override
+    public String getLanguage() {
+        return "bash";
+    }
 }

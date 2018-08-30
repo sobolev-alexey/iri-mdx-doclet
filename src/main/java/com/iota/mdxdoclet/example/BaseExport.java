@@ -135,4 +135,9 @@ public abstract class BaseExport implements Export {
 	protected int exampleInt() {
 		return new Random().nextInt(999) + 1;
 	}
+	
+    @Override
+    public String getLanguage() {
+        return getName();
+    }
 }

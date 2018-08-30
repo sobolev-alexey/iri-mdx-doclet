@@ -74,7 +74,8 @@ public class Parser {
 				x.generateExample(doc, api), 
 				response,
 				x.generateError(), 
-				x.getName())
+				x.getName(),
+				x.getLanguage())
 			);
 		}
 

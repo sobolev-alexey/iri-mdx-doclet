@@ -31,4 +31,9 @@ public class NodeJS extends BaseExport {
 		return "NodeJS";
 	}
 
+    @Override
+    public String getLanguage() {
+        return "javascript";
+    }
+
 }
