@@ -36,7 +36,7 @@ TODO: configure root url
 TODO: configure root package
 -->
 <#function url type>
-  <#return "/javadoc/" + type.qualifiedTypeName()?lower_case ?replace('.','/') + "/"/>
+  <#return "https://github.com/iotaledger/iri/blob/dev/src/main/java/" + type.qualifiedTypeName()?replace('.','/') + ".java"/>
 </#function>
 
 
