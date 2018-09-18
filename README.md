@@ -1,4 +1,4 @@
-# iota-mdx-doclet
+# iri-mdx-doclet
 Java Doclet for generating MDX files from Javadoc
 
 ### Run
